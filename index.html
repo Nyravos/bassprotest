@@ -14,9 +14,15 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
         .bg-deep { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); color: #f8fafc; }
+        
+        /* 答题选项按钮样式 */
         .option-btn { transition: all 0.2s ease; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
         .option-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateX(4px); }
         
+        /* 统一的页面跳转/下一步导航按钮样式 */
+        .nav-btn { transition: all 0.3s ease; border: 1px solid rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.05); color: #60a5fa; }
+        .nav-btn:hover { background: #60a5fa; color: #0f172a; transform: scale(1.03); box-shadow: 0 4px 20px rgba(96, 165, 250, 0.2); }
+
         .progress-bar { transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
@@ -34,7 +40,7 @@
         const config = {
             cover: {
                 sub: "One Day On The Water",
-                title: "做钓人格档案",
+                title: "鲈钓人格档案", /* 已修改为鲈钓 */
                 desc: "这不是一场考试，而是一次对本能的追溯。"
             },
             intro: {
@@ -54,13 +60,13 @@
                 {
                     q: "Q1 — 此时此刻，你的第一反应最像：",
                     options: [
-                        { t: "先观察风向、水色和饵鱼动态", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } },
-                        { t: "拿移动类路亚（Moving bait）快速搜索一圈", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
-                        { t: "直接投向结构最复杂的重障碍区", s: { heavy: 2 }, tr: { aggression: 1 } },
-                        { t: "用精细钓组（Finesse）先试探鱼的活跃度", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
-                        { t: "拿大饵（Swimbait）赌清晨的大鱼窗口", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } },
-                        { t: "想尝试一下最近新学的东西", s: { chaos: 2 }, tr: { experimentation: 2 } },
-                        { t: "先确认今天哪几套装备配比最合理", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
+                        { t: "先观察风向、水色 and bait movement", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } },
+                        { t: "拿 moving bait 快速 search 一圈", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
+                        { t: "直接去最复杂的 cover 区域", s: { heavy: 2 }, tr: { aggression: 1 } },
+                        { t: "用 finesse 先试 fish mood", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
+                        { t: "拿 swimbait 赌清晨窗口", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } },
+                        { t: "想试最近新学的东西", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "先确认今天哪几套装备最合理", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
                     ]
                 },
                 {
@@ -72,40 +78,40 @@
                         { t: "Swimbait setup (大饵装备)", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
                         { t: "Topwater rod (水面系)", s: { surface: 2 }, tr: { emotionalResponse: 1 } },
                         { t: "一边纠结一边换来换去", s: { chaos: 1, tackle: 1 }, tr: { experimentation: 1 } },
-                        { t: "根据实时水况重新思考整个体系", s: { scientist: 1, tackle: 1 }, tr: { environmentalAwareness: 1 } }
+                        { t: "根据水况重新思考整个体系", s: { scientist: 1, tackle: 1 }, tr: { environmentalAwareness: 1 } }
                     ]
                 },
                 {
                     q: "Q3 — 刚走到第一个标点，远处突然一下小炸水，但很快恢复安静。你会：",
                     options: [
-                        { t: "马上加快节奏进行搜索", s: { rhythm: 2 }, tr: { aggression: 1 } },
-                        { t: "停下来仔细观察饵鱼的移动规律", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
-                        { t: "直觉告诉我有大鱼就在附近", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
-                        { t: "想办法做更细腻的呈现与鱼互动", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
-                        { t: "第一反应是换上水面系诱饵", s: { surface: 2 }, tr: { emotionalResponse: 1 } },
-                        { t: "怀疑只是小鱼在追小苗，不以为意", s: { scientist: 1 }, tr: { logicBias: 1 } }
+                        { t: "马上加快节奏 search", s: { rhythm: 2 }, tr: { aggression: 1 } },
+                        { t: "开始观察 bait movement", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
+                        { t: "觉得可能有大鱼在附近", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
+                        { t: "想办法做更 subtle 的 interaction", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
+                        { t: "第一反应是换 topwater", s: { surface: 2 }, tr: { emotionalResponse: 1 } },
+                        { t: "怀疑只是小鱼 chasing bait", s: { scientist: 1 }, tr: { logicBias: 1 } }
                     ]
                 },
                 {
-                    q: "Q4 — 前20分钟完全没口，你现在的状态最接近：",
+                    q: "Q4 — 前 20 分钟没口，你现在的状态最接近：",
                     options: [
-                        { t: "“再坚持一下，这个节奏还没到时候。”", s: { rhythm: 1 }, tr: { patternCommitment: 2 } },
-                        { t: "“可能今天鱼的位置和我想的不一样。”", s: { scientist: 1 }, tr: { environmentalAwareness: 1 } },
+                        { t: "“再坚持一下这个节奏。”", s: { rhythm: 1 }, tr: { patternCommitment: 2 } },
+                        { t: "“可能今天鱼的位置不对。”", s: { scientist: 1 }, tr: { environmentalAwareness: 1 } },
                         { t: "“换个完全不同的东西试试。”", s: { chaos: 2 }, tr: { experimentation: 2 } },
-                        { t: "“是不是应该把动作放得更慢一点。”", s: { precision: 1 }, tr: { interactionSensitivity: 1 } },
-                        { t: "“会不会今天根本没有大鱼窗口？”", s: { bigBite: 1 }, tr: { emotionalVolatility: 2 } },
-                        { t: "开始反思是不是出门前装备没配对", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
+                        { t: "“是不是应该慢下来。”", s: { precision: 1 }, tr: { interactionSensitivity: 1 } },
+                        { t: "“会不会根本没有窗口。”", s: { bigBite: 1 }, tr: { emotionalVolatility: 2 } },
+                        { t: "开始想是不是装备没配好", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
                     ]
                 },
                 {
                     q: "Q5 — 你看到旁边的人已经连中两条，你第一反应是：",
                     options: [
-                        { t: "“看来他已经找到今天的Pattern了。”", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
-                        { t: "“他的收线节奏可能是对的。”", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
-                        { t: "“真想知道他具体用的是什么饵。”", s: { tackle: 2 }, tr: { tackleAttachment: 2 } },
-                        { t: "“我是不是也该考虑换个地方了？”", s: { chaos: 1 }, tr: { experimentation: 1 } },
-                        { t: "“没关系，我还是想坚持自己的思路。”", s: { precision: 1, heavy: 1 }, tr: { patternCommitment: 2 } },
-                        { t: "“大鱼窗口是不是终于要来了？”", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } }
+                        { t: "“他应该找到 pattern 了。”", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
+                        { t: "“他的节奏可能是对的。”", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
+                        { t: "“我想知道他用什么。”", s: { tackle: 2 }, tr: { tackleAttachment: 2 } },
+                        { t: "“我是不是也该换地方。”", s: { chaos: 1 }, tr: { experimentation: 1 } },
+                        { t: "“我还是想坚持自己的思路。”", s: { precision: 1, heavy: 1 }, tr: { patternCommitment: 2 } },
+                        { t: "“会不会大鱼窗口来了。”", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } }
                     ]
                 }
             ],
@@ -129,27 +135,25 @@
                     </div>`;
             } else if (currentState === 'intro') {
                 app.innerHTML = `
-                    <div class="fade-in max-w-md mx-auto">
+                    <div class="fade-in max-w-md mx-auto flex flex-col items-center">
                         <h2 class="serif text-3xl font-bold mb-8 text-white text-center">${config.intro.title}</h2>
-                        <div class="bg-white/5 border border-white/10 p-8 rounded-3xl mb-10 text-slate-300 leading-relaxed text-sm">
+                        <div class="bg-white/5 border border-white/10 p-8 rounded-3xl mb-10 text-slate-300 leading-relaxed text-sm w-full">
                             ${config.intro.content}
                         </div>
-                        <div class="text-center">
-                            <button onclick="changeState('chapter_start')" class="text-blue-400 font-bold tracking-widest uppercase text-xs hover:text-white transition-colors cursor-pointer underline underline-offset-8">我准备好了 →</button>
-                        </div>
+                        <button onclick="changeState('chapter_start')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">我准备好了 →</button>
                     </div>`;
             } else if (currentState === 'chapter_start') {
                 app.innerHTML = `
                     <div class="text-center fade-in">
                         <h2 class="text-blue-400 tracking-[0.2em] mb-4 uppercase text-sm font-semibold">${config.chapter}</h2>
                         <h1 class="serif text-5xl font-black mb-12 tracking-tight text-white">${config.chapterTitle}</h1>
-                        <button onclick="changeState('narrative')" class="px-12 py-4 border border-white/20 rounded-full hover:bg-white/10 transition-all font-bold">开始第一章</button>
+                        <button onclick="changeState('narrative')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">开始第一章</button>
                     </div>`;
             } else if (currentState === 'narrative') {
                 app.innerHTML = `
-                    <div class="fade-in">
+                    <div class="fade-in flex flex-col items-start">
                         <p class="serif text-xl leading-relaxed text-slate-200 mb-12">${config.opening}</p>
-                        <button onclick="changeState('quiz')" class="text-blue-400 font-bold tracking-widest uppercase text-sm hover:text-white transition-colors cursor-pointer">握紧钓竿 →</button>
+                        <button onclick="changeState('quiz')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase self-center">握紧钓竿 →</button>
                     </div>`;
             } else if (currentState === 'quiz') {
                 const q = config.questions[currentQIndex];
