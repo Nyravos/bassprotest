@@ -118,22 +118,148 @@
       tackle: "Tackle Architect｜装备构筑师"
     };
 
-    const traitLabels = {
-      environmentalAwareness: "环境感知",
-      flowDependence: "节奏依赖",
-      aggression: "进攻性",
-      interactionSensitivity: "互动敏感度",
-      narrativeDrive: "故事驱动力",
-      experimentation: "探索欲",
-      tackleAttachment: "装备执念",
-      emotionalResponse: "情绪反馈",
-      logicBias: "逻辑倾向",
-      patternCommitment: "模式坚持",
-      emotionalVolatility: "情绪波动",
-      confidenceDependency: "信心饵依赖",
-      chaosTolerance: "混乱容忍度",
-      emotionalStability: "情绪稳定性"
-    };
+    const archetypeMeta = {
+  precision: {
+    name: "Precision Controller",
+    cn: "精密操控者",
+    short: "你追求的不是单纯中鱼，而是鱼在某个瞬间被你读懂。",
+    desc: "你真正沉迷的不是鱼获本身，而是 interaction 发生前后的微妙变化。一次 follow、一次 line tick、一次停顿后的轻咬，都会比单纯的鱼获更久地留在你脑子里。你喜欢通过细节、节奏、线感和水下反馈去靠近鱼的真实状态。",
+    quote: "它刚刚不是不咬，是我的呈现还差一点。",
+    blind: "你可能会因为太在意细节，而在一天里不断怀疑自己。有时候鱼并不是“不接受你的 interaction”，只是它根本不在这里。",
+    ideal: "微风，水色略清，鱼有反应但不轻易开口。你带着 jerkbait、dropshot、hover 和 finesse 体系慢慢拆解这一天。几次真实的 follow 和几次调整后的 bite，就足够让你觉得这一天完整。"
+  },
+  rhythm: {
+    name: "Rhythm Hunter",
+    cn: "节奏猎手",
+    short: "你需要和水建立节奏，直到抛投、回收和反馈连成一条线。",
+    desc: "对你来说，钓鱼是一种持续运动中的判断。你喜欢 cast、retrieve、contact 连续发生时的 flow。中鱼不是唯一重点，真正让你兴奋的是：你感觉今天的速度、角度、震动和路线终于对上了。",
+    quote: "今天这个速度不对。",
+    blind: "你太依赖节奏感。一旦 flow 断掉，你可能会过快否定一个仍然有效的 pattern。",
+    ideal: "有风，有水色，有鱼愿意追但不乱咬。你用 chatterbait、spinnerbait、crank、swim jig 不断覆盖水域，慢慢找到那个刚刚好的速度。"
+  },
+  heavy: {
+    name: "Heavy Enforcer",
+    cn: "重障执行者",
+    short: "你不喜欢在安全地方等答案，你更想把鱼从 cover 里逼出来。",
+    desc: "你天生会被复杂、阴暗、危险的结构吸引。别人绕开的草洞、倒木、重 cover，在你眼里反而是最值得相信的地方。你喜欢那种短距离、强压制、硬碰硬的瞬间。",
+    quote: "它一定躲在里面。",
+    blind: "你有时候会把“强硬”当成唯一答案。不是所有鱼都需要被逼出来，有些鱼只是站在更开放、更微妙的位置。",
+    ideal: "闷热、光线强、鱼缩进 cover。你带着 heavy setup、flipping、punching、frog 和 heavy jig，一点点拆最复杂的障碍区。"
+  },
+  bigBite: {
+    name: "Big Bite Dreamer",
+    cn: "巨物幻想者",
+    short: "你愿意用漫长沉默，去换那一口值得记住的鱼。",
+    desc: "你不是为了稳定数量而来。你真正等待的是那种会让一天、一个季节，甚至很久以后都被反复想起的一口。你接受空白，也接受低效率，因为等待本身就是你做钓的一部分。",
+    quote: "今天可能只有一口，但值得等。",
+    blind: "你很会等，但有时也会把“坚持”包装成浪漫。不是每一天都值得为那一口牺牲全部效率。",
+    ideal: "傍晚、微风、远处有 bait movement。你不急着刷数量，只带几套大饵和信心装备，在关键窗口里等待那一次真正的重量感。"
+  },
+  surface: {
+    name: "Surface Addict",
+    cn: "表层成瘾者",
+    short: "你不是只想中鱼，你想亲眼看到水面被炸开。",
+    desc: "你对视觉、声音和瞬间爆发有天然依赖。别人可能会记住重量和数量，你会记住那一下水面炸裂、鱼影翻身和心跳突然停半拍的画面。对你来说，爆口本身就是最高级的奖励。",
+    quote: "刚才那一下爆口已经值了。",
+    blind: "你可能会为了追求画面感，错过一些更稳定、更有效的水下机会。",
+    ideal: "阴天、风面、黄昏、浅水边。你拿着 buzzbait、walking bait、popper、wakebait 或 frog，只等水面发生那一下不讲道理的爆炸。"
+  },
+  scientist: {
+    name: "Water Scientist",
+    cn: "解水研究员",
+    short: "你真正想钓明白的，不只是鱼，而是整个水域为什么这样运转。",
+    desc: "你不是单纯地抛竿等反馈。你会观察风、水色、结构、bait movement、时间窗口和季节变化。对你来说，钓鱼是一种推理：鱼不是消失了，而是条件改变了。",
+    quote: "鱼不是消失了，是条件变了。",
+    blind: "你有时会分析太多，导致出手变慢。水边不是所有答案都能先推导出来，有些答案必须先抛一竿。",
+    ideal: "陌生水域，条件复杂，鱼情不明。你一边观察风和水色，一边用不同 presentation 验证判断。真正让你满足的是：最后鱼的反应证明你读对了这个湖。"
+  },
+  chaos: {
+    name: "Chaos Explorer",
+    cn: "混沌探索者",
+    short: "当正常答案都变无聊，你会开始寻找新的可能。",
+    desc: "你不喜欢被固定套路限制。你总想试试别人没试过的 rig、角度、节奏和奇怪组合。你真正享受的，是在混乱和不确定里突然打开一个新门。",
+    quote: "正常方法都没用，那就试点不正常的。",
+    blind: "你容易太快跳到下一个可能性，导致很多东西还没真正验证，就已经被你放弃了。",
+    ideal: "鱼情古怪、常规打法全都不稳定。别人开始焦虑，你反而兴奋起来。你会把今天当成一次实验，去试那些平时没机会认真玩的东西。"
+  },
+  competitor: {
+    name: "Score Chaser",
+    cn: "竞技追分者",
+    short: "先把鱼钓出来，再谈风格。",
+    desc: "你很清楚，风格可以很迷人，但结果也很重要。你关心效率、稳定、执行和最大化鱼获。你会先建立基础输出，再考虑升级、赌大鱼或切换风格。",
+    quote: "今天不是来浪漫的，今天是来交作业的。",
+    blind: "你有时会太重视效率，导致钓鱼变得像任务。别忘了，有些最值得记住的瞬间不一定来自最优解。",
+    ideal: "比赛日或目标明确的一天。你先用高概率打法稳定拿鱼，再根据窗口和场地条件逐步升级。你的核心不是炫技，而是把这一天钓完整。"
+  },
+  tackle: {
+    name: "Tackle Architect",
+    cn: "装备构筑师",
+    short: "你习惯通过装备体系建立控制感。",
+    desc: "你不只是喜欢买装备，而是喜欢让每一根竿、每一颗轮、每一种线组都有清晰角色。对你来说，装备不是装饰，而是你理解水、控制饵、接近鱼的一种语言。",
+    quote: "这套配置的 balance 还不对。",
+    blind: "你可能会把一些技术问题转化为装备问题。很多时候，并不是你缺一套装备，而是缺一次更坚定的执行。",
+    ideal: "你带着少量但高度明确的配置出门。每一套都有角色，每一个切换都有理由。今天不需要带很多，但每一套都要有存在意义。"
+  }
+};
+
+const traitMeta = {
+  environmentalAwareness: {
+    name: "环境感知",
+    desc: "你很在意风、水色、结构、季节和 bait movement。你不是只看饵有没有被咬，而是在看整个水域的变化。"
+  },
+  flowDependence: {
+    name: "节奏依赖",
+    desc: "你需要通过连续抛投、回收、触底、震动和路线进入状态。一旦节奏顺了，你会明显变强。"
+  },
+  aggression: {
+    name: "进攻性",
+    desc: "你更愿意主动压迫鱼，而不是被动等待。cover、reaction bite 和强制反应会让你兴奋。"
+  },
+  interactionSensitivity: {
+    name: "互动敏感度",
+    desc: "你对 follow、短咬、line tick、停顿后的反应特别敏感。别人可能觉得那是没咬，你会把它当成重要信息。"
+  },
+  narrativeDrive: {
+    name: "故事驱动力",
+    desc: "你很容易被“那一口”“那条鱼”“那个窗口”吸引。你在意的不只是结果，而是这一天有没有值得记住的剧情。"
+  },
+  experimentation: {
+    name: "探索欲",
+    desc: "你喜欢尝试新东西。越是鱼情不明、常规打法失效，你越容易开始兴奋。"
+  },
+  tackleAttachment: {
+    name: "装备构筑倾向",
+    desc: "你习惯用装备体系建立控制感。竿、轮、线、饵的分工，会影响你对一天做钓的信心。"
+  },
+  emotionalResponse: {
+    name: "情绪反馈",
+    desc: "你很容易被爆口、跟鱼、missed bite 和视觉画面点燃。钓鱼对你来说有很强的情绪价值。"
+  },
+  logicBias: {
+    name: "逻辑倾向",
+    desc: "你会自然地寻找原因和证据，不太愿意把鱼情简单归结为运气。"
+  },
+  patternCommitment: {
+    name: "模式坚持",
+    desc: "你愿意相信一个 pattern，并给它足够时间。你不容易因为短时间没口就立刻推翻自己。"
+  },
+  emotionalVolatility: {
+    name: "情绪波动",
+    desc: "鱼情变化会明显影响你。一次 missed bite 或一次跟鱼，可能立刻改变你接下来的选择。"
+  },
+  confidenceDependency: {
+    name: "信心饵依赖",
+    desc: "当情况不明朗时，你容易回到最熟悉、最相信的打法。它能稳定你，也可能限制你。"
+  },
+  chaosTolerance: {
+    name: "混乱容忍度",
+    desc: "你能接受长时间没反馈和不确定。你不一定需要一直中鱼，才觉得这一天有意义。"
+  },
+  emotionalStability: {
+    name: "情绪稳定性",
+    desc: "你能接受难钓的一天，不太容易因为没口就完全失控。"
+  }
+};
 
     // =========================
     // 2. 状态系统
@@ -749,80 +875,152 @@
   return;
 }
       if (currentState === "report") {
-        const report = calculateReport();
+  const report = calculateReport();
 
-        app.innerHTML = `
-          <div class="fade-in max-w-lg mx-auto">
-            <div class="text-center mb-10">
-              <span class="text-blue-400 tracking-[0.4em] uppercase text-[10px] font-bold block mb-2">
-                Final Evaluation Profile
-              </span>
-              <h1 class="serif text-4xl font-black text-white tracking-tight mb-4">结果页占位符</h1>
-              <p class="text-slate-400 text-sm">这里后面会写完整人格报告。</p>
-            </div>
+  const primaryMeta = archetypeMeta[report.primary.name] || archetypeMeta.precision;
+  const secondaryMeta = archetypeMeta[report.secondary.name] || archetypeMeta.rhythm;
 
-            <div class="space-y-6">
-              <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <h3 class="serif text-white font-bold text-lg mb-3">🎣 主人格</h3>
-                <p class="text-blue-400 font-bold text-sm">${archetypeLabels[report.primary.name]}</p>
-                <p class="text-slate-500 text-xs mt-2">分数：${report.primary.val}</p>
-              </div>
+  app.innerHTML = `
+    <div class="fade-in max-w-2xl mx-auto">
 
-              <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
-                <h3 class="serif text-white font-bold text-lg mb-3">🌊 副人格</h3>
-                <p class="text-blue-400 font-bold text-sm">${archetypeLabels[report.secondary.name]}</p>
-                <p class="text-slate-500 text-xs mt-2">分数：${report.secondary.val}</p>
-              </div>
+      <!-- Screenshot Card -->
+      <div class="bg-white/5 border border-white/10 rounded-[2rem] p-8 mb-8 text-center shadow-2xl shadow-blue-950/20">
+        <span class="text-blue-400 tracking-[0.35em] uppercase text-[10px] font-bold block mb-4">
+          Bass Fishing Personality Profile
+        </span>
 
-              <div class="bg-slate-900/50 border border-white/5 rounded-3xl p-6">
-                <h4 class="text-slate-400 font-bold uppercase tracking-widest text-[10px] mb-4">
-                  Top Traits
-                </h4>
+        <h1 class="serif text-4xl md:text-5xl font-black text-white tracking-tight mb-3">
+          ${primaryMeta.name}
+        </h1>
 
-                <div class="space-y-3">
-                  ${report.topTraits
-                    .map(
-                      (t) => `
-                        <div>
-                          <div class="flex justify-between text-xs mb-1">
-                            <span class="text-slate-300 font-mono">${traitLabels[t.name] || t.name}</span>
-                            <span class="text-blue-400 font-bold">+${t.val}</span>
-                          </div>
-                          <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full" style="width: ${Math.min(t.val * 10, 100)}%"></div>
-                          </div>
-                        </div>
-                      `
-                    )
-                    .join("")}
+        <p class="text-blue-300 text-sm font-semibold mb-1">
+          ${primaryMeta.cn}
+        </p>
+
+        <p class="text-slate-500 text-xs mb-6">
+          with ${secondaryMeta.name} subtype · ${secondaryMeta.cn}副型
+        </p>
+
+        <p class="serif text-xl leading-relaxed text-slate-200 max-w-xl mx-auto">
+          “${primaryMeta.short}”
+        </p>
+      </div>
+
+      <!-- Main Interpretation -->
+      <div class="space-y-6">
+
+        <section class="bg-white/5 border border-white/10 rounded-3xl p-6">
+          <h2 class="serif text-white font-bold text-xl mb-4">
+            1. 你的主人格：${primaryMeta.cn}
+          </h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            ${primaryMeta.desc}
+          </p>
+        </section>
+
+        <section class="bg-white/5 border border-white/10 rounded-3xl p-6">
+          <h2 class="serif text-white font-bold text-xl mb-4">
+            2. 你的副人格：${secondaryMeta.cn}
+          </h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            你的副人格不是“第二个你”，而是你表现主人格的方式。
+            你在追求「${primaryMeta.cn}」核心驱动力时，会带着明显的「${secondaryMeta.cn}」倾向。
+            这意味着你不是单一路线的钓手，你的做钓方式里同时存在另一种稳定的惯性。
+          </p>
+        </section>
+
+        <!-- Traits -->
+        <section class="bg-slate-900/50 border border-white/5 rounded-3xl p-6">
+          <h2 class="serif text-white font-bold text-xl mb-5">
+            3. 你的核心隐藏 Traits
+          </h2>
+
+          <div class="space-y-5">
+            ${report.topTraits.map((t) => {
+              const meta = traitMeta[t.name] || { name: t.name, desc: "" };
+              return `
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-200 text-sm font-bold">${meta.name}</span>
+                    <span class="text-blue-400 text-xs font-mono">+${t.val}</span>
+                  </div>
+                  <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden mb-2">
+                    <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full" style="width: ${Math.min(t.val * 8, 100)}%"></div>
+                  </div>
+                  <p class="text-slate-400 text-xs leading-relaxed">${meta.desc}</p>
                 </div>
-              </div>
-
-              <div class="bg-white/5 border border-dashed border-white/20 rounded-3xl p-6">
-                <h3 class="serif text-white font-bold text-lg mb-3">📝 后续待补内容</h3>
-                <ul class="text-slate-400 text-xs leading-relaxed list-disc pl-5 space-y-2">
-                  <li>主副人格组合标题</li>
-                  <li>完整故事感人格描述</li>
-                  <li>危险倾向 / 盲点</li>
-                  <li>理想出钓日</li>
-                  <li>经典语录</li>
-                  <li>适合深入的做钓主题</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="text-center mt-12">
-              <p class="serif text-slate-400 text-sm italic mb-8">
-                “你真正沉迷的，从来不只是钓到鱼。而是，成为水边的那个自己。”
-              </p>
-              <button onclick="window.location.reload()" class="border border-white/10 text-slate-400 px-6 py-2 rounded-full text-[10px] font-mono tracking-widest uppercase hover:text-white transition-all">
-                重新驶入湖泊 🎣
-              </button>
-            </div>
+              `;
+            }).join("")}
           </div>
-        `;
-      }
-    }
+        </section>
+
+        <!-- Archetype Distribution -->
+        <section class="bg-slate-900/50 border border-white/5 rounded-3xl p-6">
+          <h2 class="serif text-white font-bold text-xl mb-5">
+            4. 人格分布图
+          </h2>
+
+          <div class="space-y-3">
+            ${report.allArchetypes.map((a) => {
+              const meta = archetypeMeta[a.name] || { cn: a.name };
+              const width = report.maxArchetypeScore > 0 ? (a.val / report.maxArchetypeScore) * 100 : 0;
+              return `
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-slate-300">${meta.cn}</span>
+                    <span class="text-slate-500 font-mono">${a.val}</span>
+                  </div>
+                  <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-blue-500/70 rounded-full" style="width: ${width}%"></div>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </section>
+
+        <!-- Blind Spot -->
+        <section class="bg-white/5 border border-white/10 rounded-3xl p-6">
+          <h2 class="serif text-white font-bold text-xl mb-4">
+            5. 你的盲点 / 危险倾向
+          </h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            ${primaryMeta.blind}
+          </p>
+        </section>
+
+        <!-- Ideal Day -->
+        <section class="bg-white/5 border border-white/10 rounded-3xl p-6">
+          <h2 class="serif text-white font-bold text-xl mb-4">
+            6. 你的理想出钓日
+          </h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            ${primaryMeta.ideal}
+          </p>
+        </section>
+
+        <!-- Quote -->
+        <section class="bg-blue-500/10 border border-blue-400/20 rounded-3xl p-6 text-center">
+          <h2 class="text-blue-300 text-xs uppercase tracking-[0.3em] font-bold mb-4">
+            Signature Line
+          </h2>
+          <p class="serif text-2xl text-white leading-relaxed">
+            “${primaryMeta.quote}”
+          </p>
+        </section>
+
+      </div>
+
+      <div class="text-center mt-12">
+        <button onclick="window.location.reload()" class="border border-white/10 text-slate-400 px-6 py-2 rounded-full text-[10px] font-mono tracking-widest uppercase hover:text-white transition-all">
+          重新驶入湖泊 🎣
+        </button>
+      </div>
+
+    </div>
+  `;
+  return;
+}
 
     // =========================
     // 6. 交互函数
@@ -881,23 +1079,26 @@
     // =========================
 
     function calculateReport() {
-      const sortedArch = Object.entries(scores.archetypes)
-        .map(([name, val]) => ({ name, val }))
-        .sort((a, b) => b.val - a.val);
+  const sortedArch = Object.entries(scores.archetypes)
+    .map(([name, val]) => ({ name, val }))
+    .sort((a, b) => b.val - a.val);
 
-      const sortedTraits = Object.entries(scores.traits)
-        .map(([name, val]) => ({ name, val }))
-        .sort((a, b) => b.val - a.val);
+  const sortedTraits = Object.entries(scores.traits)
+    .map(([name, val]) => ({ name, val }))
+    .sort((a, b) => b.val - a.val);
 
-      return {
-        primary: sortedArch[0],
-        secondary: sortedArch[1],
-        topTraits: sortedTraits.slice(0, 3),
-        lowestTrait: sortedTraits[sortedTraits.length - 1],
-        allArchetypes: sortedArch,
-        allTraits: sortedTraits
-      };
-    }
+  const maxArchetypeScore = sortedArch.length > 0 ? sortedArch[0].val : 0;
+
+  return {
+    primary: sortedArch[0],
+    secondary: sortedArch[1],
+    topTraits: sortedTraits.slice(0, 3),
+    lowestTrait: sortedTraits[sortedTraits.length - 1],
+    allArchetypes: sortedArch,
+    allTraits: sortedTraits,
+    maxArchetypeScore
+  };
+}
 
     render();
   </script>
