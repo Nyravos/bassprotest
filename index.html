@@ -3,54 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>性格测试原型</title>
+    <title>Bass Fishing Personality Project</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;900&family=Inter:wght@300;600&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; transition: all 1.5s ease; }
+        .serif { font-family: 'Noto Serif SC', serif; }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 晨曦氛围背景 */
+        .bg-arrival { background: linear-gradient(180deg, #1e293b 0%, #334155 100%); color: #f8fafc; }
+        .option-btn { transition: all 0.2s ease; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+        .option-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-    <div id="app" class="max-w-md mx-auto min-h-screen flex flex-col justify-center p-6">
+<body class="bg-arrival min-h-screen">
+    <div id="app" class="max-w-2xl mx-auto min-h-screen flex flex-col p-6 pt-12">
         <!-- 动态内容渲染 -->
     </div>
 
     <script>
-        // 【框架配置】将来你只需要改这里的内容
-        const config = {
-            title: "我的性格测试原型",
-            subtitle: "框架已连通，等待导入正式内容",
-            questions: [
-                { q: "测试题 1：你喜欢白天还是黑夜？", options: [{ t: "白天", s: "A" }, { t: "黑夜", s: "B" }] },
-                { q: "测试题 2：你喜欢大海还是森林？", options: [{ t: "大海", s: "A" }, { t: "森林", s: "B" }] }
-            ],
-            results: {
-                "A": { t: "阳光型", d: "你是一个积极向上的人（这是示例结果）。" },
-                "B": { t: "深沉型", d: "你有着丰富的内心世界（这是示例结果）。" }
-            }
+        // 1. 初始化分数系统
+        let scores = {
+            archetypes: { scientist: 0, rhythm: 0, heavy: 0, precision: 0, bigBite: 0, chaos: 0, tackle: 0, surface: 0 },
+            traits: { environmentalAwareness: 0, flowDependence: 0, aggression: 0, interactionSensitivity: 0, narrativeDrive: 0, experimentation: 0, tackleAttachment: 0, emotionalResponse: 0, logicBias: 0, patternCommitment: 0, emotionalVolatility: 0 }
         };
 
-        let state = { step: 'start', index: 0, scores: { A: 0, B: 0 } };
+        const config = {
+            chapter: "Chapter 1 — Arrival",
+            title: "The First Cast",
+            opening: `清晨 5:42。<br><br>你第一次来到这个湖。昨晚刚下过小雨，空气有点潮。风不大，但水面偶尔有波纹。<br><br>岸边有零散草区、一些倒木，远处能看到饵鱼的动向。<br><br>天还没完全亮。你站在岸边，准备开始今天的第一杆。`,
+            questions: [
+                {
+                    q: "Q1 — 此时此刻，你的第一反应最像：",
+                    options: [
+                        { t: "先观察风向、水色和饵鱼动态", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } },
+                        { t: "拿移动类路亚（Moving bait）快速搜索一圈", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
+                        { t: "直接投向结构最复杂的重障碍区", s: { heavy: 2 }, tr: { aggression: 1 } },
+                        { t: "用精细钓组（Finesse）先试探鱼的活跃度", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
+                        { t: "拿大饵（Swimbait）赌清晨的大鱼窗口", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } },
+                        { t: "想尝试一下最近新学的东西", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "先确认今天哪几套装备配比最合理", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
+                    ]
+                },
+                {
+                    q: "Q2 — 真正准备开始时，你最自然会先拿起：",
+                    options: [
+                        { t: "Moving bait rod (搜索竿)", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
+                        { t: "Finesse / ST rod (精细竿)", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
+                        { t: "Heavy cover setup (重型路亚)", s: { heavy: 2 }, tr: { aggression: 1 } },
+                        { t: "Swimbait setup (大饵装备)", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
+                        { t: "Topwater rod (水面系)", s: { surface: 2 }, tr: { emotionalResponse: 1 } },
+                        { t: "一边纠结一边换来换去", s: { chaos: 1, tackle: 1 }, tr: { experimentation: 1 } },
+                        { t: "根据实时水况重新思考整个体系", s: { scientist: 1, tackle: 1 }, tr: { environmentalAwareness: 1 } }
+                    ]
+                },
+                {
+                    q: "Q3 — 刚走到第一个标点，远处突然一下小炸水，但很快恢复安静。你会：",
+                    options: [
+                        { t: "马上加快节奏进行搜索", s: { rhythm: 2 }, tr: { aggression: 1 } },
+                        { t: "停下来仔细观察饵鱼的移动规律", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
+                        { t: "直觉告诉我有大鱼就在附近", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
+                        { t: "想办法做更细腻的呈现与鱼互动", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
+                        { t: "第一反应是换上水面系诱饵", s: { surface: 2 }, tr: { emotionalResponse: 1 } },
+                        { t: "怀疑只是小鱼在追小苗，不以为意", s: { scientist: 1 }, tr: { logicBias: 1 } }
+                    ]
+                },
+                {
+                    q: "Q4 — 前20分钟完全没口，你现在的状态最接近：",
+                    options: [
+                        { t: "“再坚持一下，这个节奏还没到时候。”", s: { rhythm: 1 }, tr: { patternCommitment: 2 } },
+                        { t: "“可能今天鱼的位置和我想的不一样。”", s: { scientist: 1 }, tr: { environmentalAwareness: 1 } },
+                        { t: "“换个完全不同的东西试试。”", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "“是不是应该把动作放得更慢一点。”", s: { precision: 1 }, tr: { interactionSensitivity: 1 } },
+                        { t: "“会不会今天根本没有大鱼窗口？”", s: { bigBite: 1 }, tr: { emotionalVolatility: 2 } },
+                        { t: "开始反思是不是出门前装备没配对", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
+                    ]
+                },
+                {
+                    q: "Q5 — 你看到旁边的人已经连中两条，你第一反应是：",
+                    options: [
+                        { t: "“看来他已经找到今天的Pattern了。”", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
+                        { t: "“他的收线节奏可能是对的。”", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
+                        { t: "“真想知道他具体用的是什么饵。”", s: { tackle: 2 }, tr: { tackleAttachment: 2 } },
+                        { t: "“我是不是也该考虑换个地方了？”", s: { chaos: 1 }, tr: { experimentation: 1 } },
+                        { t: "“没关系，我还是想坚持自己的思路。”", s: { precision: 1, heavy: 1 }, tr: { patternCommitment: 2 } },
+                        { t: "“大鱼窗口是不是终于要来了？”", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } }
+                    ]
+                }
+            ],
+            ending: `天已经完全亮了。<br><br>风开始慢慢变强，水面的变化越来越少。<br><br>你意识到：<br>今天的鱼，可能没有那么简单。`
+        };
+
+        let currentState = 'start'; // start, narrative, quiz, end
+        let currentQIndex = 0;
 
         function render() {
             const app = document.getElementById('app');
-            if (state.step === 'start') {
-                app.innerHTML = `<div class="text-center fade-in"><h1 class="text-3xl font-black mb-4 text-indigo-600">${config.title}</h1><p class="text-slate-500 mb-8">${config.subtitle}</p><button onclick="state.step='quiz';render()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg">开始测试</button></div>`;
-            } else if (state.step === 'quiz') {
-                const q = config.questions[state.index];
-                const progress = ((state.index + 1) / config.questions.length) * 100;
-                app.innerHTML = `<div class="fade-in"><div class="w-full bg-slate-200 h-2 rounded-full mb-8"><div class="bg-indigo-600 h-2 rounded-full transition-all" style="width:${progress}%"></div></div><h2 class="text-2xl font-bold mb-8">${q.q}</h2><div class="space-y-4">${q.options.map(o => `<button onclick="next('${o.s}')" class="w-full p-4 text-left border-2 border-slate-200 rounded-xl hover:border-indigo-500 transition">${o.t}</button>`).join('')}</div></div>`;
-            } else {
-                const final = state.scores.A >= state.scores.B ? config.results.A : config.results.B;
-                app.innerHTML = `<div class="text-center fade-in"><h3 class="text-indigo-500 font-bold tracking-widest mb-2">测试结果</h3><h1 class="text-4xl font-black mb-6">${final.t}</h1><p class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-slate-600">${final.d}</p><button onclick="location.reload()" class="mt-8 text-indigo-600 font-semibold text-sm">重新测试</button></div>`;
+            if (currentState === 'start') {
+                app.innerHTML = `
+                    <div class="my-auto text-center fade-in">
+                        <h2 class="text-blue-400 tracking-[0.2em] mb-4 uppercase text-sm font-semibold">${config.chapter}</h2>
+                        <h1 class="serif text-5xl font-black mb-12 tracking-tight">${config.title}</h1>
+                        <button onclick="changeState('narrative')" class="px-12 py-4 border border-white/20 rounded-full hover:bg-white hover:text-slate-900 transition-all font-bold">开启旅程</button>
+                    </div>`;
+            } else if (currentState === 'narrative') {
+                app.innerHTML = `
+                    <div class="my-auto fade-in">
+                        <p class="serif text-xl leading-relaxed text-slate-200 mb-12">${config.opening}</p>
+                        <button onclick="changeState('quiz')" class="text-blue-400 font-bold tracking-widest uppercase text-sm hover:text-white transition-colors cursor-pointer">下一步 →</button>
+                    </div>`;
+            } else if (currentState === 'quiz') {
+                const q = config.questions[currentQIndex];
+                app.innerHTML = `
+                    <div class="fade-in">
+                        <div class="h-1 w-full bg-white/10 mb-12 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-500 transition-all duration-500" style="width: ${(currentQIndex+1)/config.questions.length*100}%"></div>
+                        </div>
+                        <h2 class="serif text-2xl font-bold mb-8 text-white">${q.q}</h2>
+                        <div class="space-y-3">
+                            ${q.options.map((o, i) => `<button onclick="handleAnswer(${i})" class="option-btn w-full p-5 text-left rounded-xl text-slate-300 hover:text-white transition-all">${o.t}</button>`).join('')}
+                        </div>
+                    </div>`;
+            } else if (currentState === 'end') {
+                app.innerHTML = `
+                    <div class="my-auto fade-in">
+                        <p class="serif text-xl leading-relaxed text-slate-200 mb-12 italic">${config.ending}</p>
+                        <div class="p-6 border border-white/10 rounded-2xl bg-white/5">
+                            <p class="text-xs text-slate-500 uppercase tracking-widest mb-4">Chapter 1 数据已记录</p>
+                            <p class="text-sm text-slate-400">目前你的做钓倾向：<br><span class="text-blue-400 font-mono">${JSON.stringify(scores.archetypes)}</span></p>
+                        </div>
+                        <p class="mt-12 text-slate-500 text-sm">等待 Chapter 2 开启...</p>
+                    </div>`;
             }
         }
 
-        window.next = (s) => {
-            state.scores[s]++;
-            if (state.index < config.questions.length - 1) state.index++;
-            else state.step = 'result';
-            render();
+        window.changeState = (s) => { currentState = s; render(); };
+
+        window.handleAnswer = (i) => {
+            const opt = config.questions[currentQIndex].options[i];
+            // 累加人格分
+            for (let k in opt.s) { scores.archetypes[k] += opt.s[k]; }
+            // 累加特质分
+            for (let k in opt.tr) { scores.traits[k] += opt.tr[k]; }
+            
+            if (currentQIndex < config.questions.length - 1) {
+                currentQIndex++;
+                render();
+            } else {
+                currentState = 'end';
+                render();
+            }
         };
 
         render();
