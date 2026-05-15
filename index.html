@@ -530,11 +530,12 @@
           天还没完全亮。你站在岸边，准备开始今天的第一杆。
         `,
         ending: `
-          天已经完全亮了。<br><br>
-          风开始慢慢变强，水面的变化越来越少。<br><br>
-          你意识到：<br>
-          今天的鱼，可能没有那么简单。
-        `
+  天已经完全亮了。<br><br>
+  风开始慢慢变强，水面的变化越来越少。<br><br>
+  <span class="italic text-blue-200">
+    你意识到：今天的鱼，可能没有那么简单。
+  </span>
+`
       },
       2: {
         meta: "Chapter 2 — First Contact",
@@ -546,11 +547,13 @@
           今天的鱼，开始慢慢“出现”了。
         `,
         ending: `
-          太阳已经升高。<br><br>
-          风变得更稳定了。但鱼的反馈，却开始慢慢减少。<br><br>
-          你意识到：<br>
-          今天真正的 pattern，可能还没有完全出现。
-        `
+  太阳已经升高。<br><br>
+  风变得更稳定了。<br><br>
+  但鱼的反馈，却开始慢慢减少。<br><br>
+  <span class="italic text-blue-200">
+    你意识到：今天真正的 pattern，可能还没有完全出现。
+  </span>
+`
       },
       3: {
         meta: "Chapter 3 — Struggle",
@@ -562,12 +565,14 @@
           你开始意识到：真正困难的时间，到了。
         `,
         ending: `
-          下午的风开始变化。<br><br>
-          云层慢慢移动。<br><br>
-          远处岸边，突然出现了一些新的 bait movement。<br><br>
-          湖好像重新“活”了一点。<br><br>
-          你知道：今天真正的窗口，可能还没结束。
-        `
+  下午的风开始变化。<br><br>
+  云层慢慢移动。<br><br>
+  远处岸边，突然出现了一些新的 bait movement。<br><br>
+  湖好像重新“活”了一点。<br><br>
+  <span class="italic text-blue-200">
+    你知道：今天真正的窗口，可能还没结束。
+  </span>
+`
       },
       4: {
         meta: "Chapter 4 — Window",
@@ -580,11 +585,13 @@
           你知道，湖正在重新醒过来。
         `,
         ending: `
-          太阳开始落下，风慢慢停了，湖重新安静下来。<br><br>
-          今天已经快结束了。<br><br>
-          但脑子里，还停留着某次 follow、某一下炸水，某个没咬下去的瞬间。<br><br>
-          你开始意识到：今天真正留下来的，可能不只是鱼获。
-        `
+  太阳开始落下，风慢慢停了，湖重新安静下来。<br><br>
+  今天已经快结束了。<br><br>
+  但脑子里，还停留着某次 follow、某一下炸水，某个没咬下去的瞬间。<br><br>
+  <span class="italic text-blue-200">
+    你开始意识到：今天真正留下来的，可能不只是鱼获。
+  </span>
+`
       },
       5: {
         meta: "Chapter 5 — Reflection",
@@ -596,12 +603,16 @@
           你开始意识到：真正留在脑子里的，从来不只是鱼获。
         `,
         ending: `
-          夜已经很深了。<br><br>
-          你知道，今天其实已经结束。<br><br>
-          但脑子里，还停留着某次 interaction、某个窗口、某条没真正出现的鱼……<br><br>
-          你慢慢意识到：你真正沉迷的，从来不只是“钓到鱼”。<br><br>
-          而是——<b>「成为水边的那个自己。」</b>
-        `
+  夜已经很深了。<br><br>
+  你知道，今天其实已经结束。<br><br>
+  但脑子里，还停留着某次 interaction、某个窗口、某条没真正出现的鱼……<br><br>
+  <span class="italic text-blue-200">
+    你慢慢意识到：你真正沉迷的，从来不只是“钓到鱼”。
+  </span><br><br>
+  <span class="serif text-2xl font-bold text-white">
+    而是——「成为水边的那个自己。」
+  </span>
+`
       }
     };
 
@@ -710,52 +721,33 @@
         return;
       }
 
-      if (currentState === "chapter_end") {
-        const chapter = chapterInfo[activeChapter];
+ if (currentState === "chapter_end") {
+  const chapter = chapterInfo[activeChapter];
 
-        let btnText = "";
-        let nextAction = "";
+  let btnText = "";
+  let nextAction = "";
 
-        if (activeChapter < 5) {
-          btnText = `进入第 ${activeChapter + 1} 章 →`;
-          nextAction = `startChapter(${activeChapter + 1})`;
-        } else {
-          btnText = "拉竿收线，查看人格档案 →";
-          nextAction = "generateFinalReport()";
-        }
+  if (activeChapter < 5) {
+    btnText = `进入第 ${activeChapter + 1} 章 →`;
+    nextAction = `startChapter(${activeChapter + 1})`;
+  } else {
+    btnText = "拉竿收线，查看人格档案 →";
+    nextAction = "generateFinalReport()";
+  }
 
-        app.innerHTML = `
-          <div class="fade-in flex flex-col items-center">
-            <p class="serif text-xl leading-relaxed text-slate-200 mb-12 italic w-full text-center">${chapter.ending}</p>
+  app.innerHTML = `
+    <div class="fade-in flex flex-col items-center">
+      <div class="serif text-xl leading-relaxed text-slate-200 mb-12 w-full text-left">
+        ${chapter.ending}
+      </div>
 
-            <div class="p-6 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm w-full mb-6">
-              <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2 text-center">
-                当前已捕获的人格雷达特征值
-              </p>
-
-              <div class="grid grid-cols-2 gap-x-8 gap-y-2 max-w-xs mx-auto text-center">
-                ${Object.entries(scores.archetypes)
-                  .filter(([_, v]) => v > 0)
-                  .map(
-                    ([k, v]) => `
-                      <div class="text-xs font-mono flex justify-between">
-                        <span class="text-slate-400 text-[11px]">${k}:</span>
-                        <span class="text-blue-400 font-bold">+${v}</span>
-                      </div>
-                    `
-                  )
-                  .join("")}
-              </div>
-            </div>
-
-            <button onclick="${nextAction}" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">
-              ${btnText}
-            </button>
-          </div>
-        `;
-        return;
-      }
-
+      <button onclick="${nextAction}" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">
+        ${btnText}
+      </button>
+    </div>
+  `;
+  return;
+}
       if (currentState === "report") {
         const report = calculateReport();
 
