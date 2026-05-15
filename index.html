@@ -747,27 +747,32 @@ const chapterQuotes = {
   1: {
     quote: "My dream came true.",
     cn: "我的梦想实现了。",
-    source: "Kyoya Fujita · 2023 Bassmaster Elite at Lake Champlain Champion"
+    name: "Kyoya Fujita",
+    source: "2023 Bassmaster Elite at Lake Champlain Champion"
   },
   2: {
     quote: "As an angler, you have to go where they are.",
     cn: "作为钓手，你必须去鱼所在的地方。",
-    source: "Rick Clunn · 4-Time Bassmaster Classic Champion"
+    name: "Rick Clunn",
+    source: "4-Time Bassmaster Classic Champion"
   },
   3: {
     quote: "Never give up!",
     cn: "永远不要放弃。",
-    source: "Mike Iaconelli · 2003 Bassmaster Classic Champion"
+    name: "Mike Iaconelli",
+    source: "2003 Bassmaster Classic Champion"
   },
   4: {
     quote: "I just hung around and stuck with it.",
     cn: "我就留在那里，坚持了下来。",
-    source: "Takahiro Omori · 2004 Bassmaster Classic Champion"
+    name: "Takahiro Omori",
+    source: "2004 Bassmaster Classic Champion"
   },
   5: {
     quote: "The day was my best fishing day ever in a number of ways.",
     cn: "从很多意义上说，那是我最棒的一天。",
-    source: "Kevin VanDam · 4-Time Bassmaster Classic Champion"
+    name: "Kevin VanDam",
+    source: "4-Time Bassmaster Classic Champion"
   }
 };
 
@@ -905,9 +910,14 @@ if (currentState === "chapter_end") {
         <p class="text-slate-500 text-xs leading-relaxed mb-2">
           ${quote.cn}
         </p>
-        <p class="text-[10px] text-slate-600 uppercase tracking-[0.18em] leading-relaxed">
-          ${quote.source}
-        </p>
+       <div class="leading-relaxed">
+  <p class="text-[11px] text-slate-500 font-semibold tracking-[0.08em]">
+    ${quote.name}
+  </p>
+  <p class="text-[10px] text-slate-600 tracking-[0.12em]">
+    ${quote.source}
+  </p>
+</div>
       </div>
 
       <button onclick="${nextAction}" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">
