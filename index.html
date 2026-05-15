@@ -3,14 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在建设中...</title>
+    <title>性格测试原型</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div id="app" class="bg-white p-8 rounded-3xl shadow-xl max-w-md w-full m-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-800">性格测试框架已就绪</h1>
-        <p class="text-gray-500 mt-4">等待主人上传 Docx 内容...</p>
-        <div class="mt-6 animate-pulse bg-gray-200 h-10 w-full rounded-lg"></div>
+<body class="bg-slate-50 text-slate-800 antialiased">
+    <div id="app" class="max-w-md mx-auto min-h-screen flex flex-col justify-center p-6">
+        <!-- 动态内容渲染 -->
     </div>
+
+    <script>
+        // 【框架配置】将来你只需要改这里的内容
+        const config = {
+            title: "我的性格测试原型",
+            subtitle: "框架已连通，等待导入正式内容",
+            questions: [
+                { q: "测试题 1：你喜欢白天还是黑夜？", options: [{ t: "白天", s: "A" }, { t: "黑夜", s: "B" }] },
+                { q: "测试题 2：你喜欢大海还是森林？", options: [{ t: "大海", s: "A" }, { t: "森林", s: "B" }] }
+            ],
+            results: {
+                "A": { t: "阳光型", d: "你是一个积极向上的人（这是示例结果）。" },
+                "B": { t: "深沉型", d: "你有着丰富的内心世界（这是示例结果）。" }
+            }
+        };
+
+        let state = { step: 'start', index: 0, scores: { A: 0, B: 0 } };
+
+        function render() {
+            const app = document.getElementById('app');
+            if (state.step === 'start') {
+                app.innerHTML = `<div class="text-center fade-in"><h1 class="text-3xl font-black mb-4 text-indigo-600">${config.title}</h1><p class="text-slate-500 mb-8">${config.subtitle}</p><button onclick="state.step='quiz';render()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg">开始测试</button></div>`;
+            } else if (state.step === 'quiz') {
+                const q = config.questions[state.index];
+                const progress = ((state.index + 1) / config.questions.length) * 100;
+                app.innerHTML = `<div class="fade-in"><div class="w-full bg-slate-200 h-2 rounded-full mb-8"><div class="bg-indigo-600 h-2 rounded-full transition-all" style="width:${progress}%"></div></div><h2 class="text-2xl font-bold mb-8">${q.q}</h2><div class="space-y-4">${q.options.map(o => `<button onclick="next('${o.s}')" class="w-full p-4 text-left border-2 border-slate-200 rounded-xl hover:border-indigo-500 transition">${o.t}</button>`).join('')}</div></div>`;
+            } else {
+                const final = state.scores.A >= state.scores.B ? config.results.A : config.results.B;
+                app.innerHTML = `<div class="text-center fade-in"><h3 class="text-indigo-500 font-bold tracking-widest mb-2">测试结果</h3><h1 class="text-4xl font-black mb-6">${final.t}</h1><p class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-slate-600">${final.d}</p><button onclick="location.reload()" class="mt-8 text-indigo-600 font-semibold text-sm">重新测试</button></div>`;
+            }
+        }
+
+        window.next = (s) => {
+            state.scores[s]++;
+            if (state.index < config.questions.length - 1) state.index++;
+            else state.step = 'result';
+            render();
+        };
+
+        render();
+    </script>
 </body>
 </html>
