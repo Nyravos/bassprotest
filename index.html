@@ -6,7 +6,7 @@
     <title>Bass Fishing Personality Project</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;900&family=Inter:wght@300;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght=400;900&family=Inter:wght=300;600&display=swap');
         
         body { font-family: 'Inter', sans-serif; transition: all 1.5s ease; background-color: #0f172a; }
         .serif { font-family: 'Noto Serif SC', serif; }
@@ -15,11 +15,9 @@
         
         .bg-deep { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); color: #f8fafc; }
         
-        /* 答题选项按钮样式 */
         .option-btn { transition: all 0.2s ease; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
         .option-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); transform: translateX(4px); }
         
-        /* 统一的页面跳转/下一步导航按钮样式 */
         .nav-btn { transition: all 0.3s ease; border: 1px solid rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.05); color: #60a5fa; }
         .nav-btn:hover { background: #60a5fa; color: #0f172a; transform: scale(1.03); box-shadow: 0 4px 20px rgba(96, 165, 250, 0.2); }
 
@@ -32,15 +30,17 @@
     </div>
 
     <script>
+        // 【全局分数箱】
         let scores = {
             archetypes: { scientist: 0, rhythm: 0, heavy: 0, precision: 0, bigBite: 0, chaos: 0, tackle: 0, surface: 0 },
             traits: { environmentalAwareness: 0, flowDependence: 0, aggression: 0, interactionSensitivity: 0, narrativeDrive: 0, experimentation: 0, tackleAttachment: 0, emotionalResponse: 0, logicBias: 0, patternCommitment: 0, emotionalVolatility: 0 }
         };
 
+        // 【动态配置仓库】
         const config = {
             cover: {
                 sub: "One Day On The Water",
-                title: "鲈钓人格档案", /* 已修改为鲈钓 */
+                title: "鲈钓人格档案",
                 desc: "这不是一场考试，而是一次对本能的追溯。"
             },
             intro: {
@@ -53,10 +53,15 @@
                     • <b>沉浸其中</b>：想象你正站在那个清晨的岸边。
                 `
             },
-            chapter: "Chapter 1 — Arrival",
+            // 当前激活的章节文字（由代码动态切换）
+            chapterMeta: "Chapter 1 — Arrival",
             chapterTitle: "The First Cast",
-            opening: `清晨 5:42。<br><br>你第一次来到这个湖。昨晚刚下过小雨，空气有点潮。风不大，但水面偶尔有波纹。<br><br>岸边有零散草区、一些倒木，远处能看到饵鱼的动向。<br><br>天还没完全亮。你站在岸边，准备开始今天的第一杆。`,
+            openingText: `清晨 5:42。<br><br>你第一次来到这个湖。昨晚刚下过小雨，空气有点潮。风不大，但水面偶尔有波纹。<br><br>岸边有零散草区、一些倒木，远处能看到饵鱼的动向。<br><br>天还没完全亮。你站在岸边，准备开始今天的第一杆。`,
+            endingText: `天已经完全亮了。<br><br>风开始慢慢变强，水面的变化越来越少。<br><br>你意识到：<br>今天的鱼，可能没有那么简单。`,
+
+            // 核心大题库（包含 10 道题，每 5 题为一章）
             questions: [
+                // ------ CHAPTER 1 题目 (Q1 - Q5) ------
                 {
                     q: "Q1 — 此时此刻，你的第一反应最像：",
                     options: [
@@ -114,10 +119,10 @@
                         { t: "“会不会大鱼窗口来了。”", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } }
                     ]
                 },
-                                // === 以下为 CHAPTER 2 的全新题库零件 ===
+
+                // ------ CHAPTER 2 题目 (Q6 - Q10) ------
                 {
-                    ch: 2,
-                    q: "Q6 (Ch2-Q1) — 你看到一条鱼跟到了岸边，明显对饵有兴趣，但最后没咬。你第一反应是：",
+                    q: "Q6 — 你看到一条鱼跟到了岸边，明显对饵有兴趣，但最后没咬。你第一反应是：",
                     options: [
                         { t: "改变 cadence 再试一次", s: { precision: 2 }, tr: { interactionSensitivity: 2 } },
                         { t: "换另一个 moving bait 保持节奏", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
@@ -128,20 +133,18 @@
                     ]
                 },
                 {
-                    ch: 2,
-                    q: "Q7 (Ch2-Q2) — 终于迎来今天第一个真正 bite，但 set hook 没挂住。那一下之后，你的情绪更接近：",
+                    q: "Q7 — 终于迎来今天第一个真正 bite，但 set hook 没挂住。那一下之后，你的情绪更接近：",
                     options: [
                         { t: "很想马上再次复制那个 interaction", s: { precision: 2 }, tr: { interactionSensitivity: 2 } },
                         { t: "开始思考刚刚 retrieve rhythm 哪里不对", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
                         { t: "有点上头，做钓风格开始变激进", s: { heavy: 1, surface: 1 }, tr: { emotionalVolatility: 2 } },
                         { t: "会开始想：“那可能是今天最大的一条鱼。”", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } },
-                        { t: "更在意它刚刚为什么会咬（水流/阴影/停顿？）", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
+                        { t: "更在意它刚刚为什么会咬", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
                         { t: "想马上换个完全不同的东西抛过去", s: { chaos: 2 }, tr: { experimentation: 2 } }
                     ]
                 },
                 {
-                    ch: 2,
-                    q: "Q8 (Ch2-Q3) — 接下来半小时有鱼跟但始终不开口，你更可能：",
+                    q: "Q8 — 接下来半小时有鱼跟但始终不开口，你更可能：",
                     options: [
                         { t: "不断微调节奏和停顿时间", s: { precision: 2 }, tr: { interactionSensitivity: 2 } },
                         { t: "保持现在的 flow，相信窗口总会打开", s: { rhythm: 2 }, tr: { patternCommitment: 1 } },
@@ -152,8 +155,7 @@
                     ]
                 },
                 {
-                    ch: 2,
-                    q: "Q9 (Ch2-Q4) — 你终于钓到今天第一条鱼，不算大但状态很好。你第一反应是：",
+                    q: "Q9 — 你终于钓到今天第一条鱼，不算大但状态很好。你第一反应是：",
                     options: [
                         { t: "“终于读对了一点鱼的心思。”", s: { precision: 2 }, tr: { interactionSensitivity: 1 } },
                         { t: "“今天这个节奏（rhythm）应该是成立的。”", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
@@ -164,24 +166,93 @@
                     ]
                 },
                 {
-                    ch: 2,
-                    q: "Q10 (Ch2-Q5) — 接近中午时感受到一次极其微弱的 line tick，不确定是不是 bite。那一瞬间你最享受的是：",
+                    q: "Q10 — 接近中午时感受到一次极其微弱的 line tick，不确定是不是 bite。那一瞬间你最享受的是：",
                     options: [
                         { t: "“心跳加速，interaction 真的发生了。”", s: { precision: 2 }, tr: { interactionSensitivity: 2 } },
                         { t: "“心流没断，做钓节奏终于接上了。”", s: { rhythm: 2 }, tr: { flowDependence: 2 } },
                         { t: "“博弈开始，它终于暴露位置了。”", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
-                        { t: "“这种电击般的未知瞬间，比纯粹中鱼还上头。”", s: { surface: 1, bigBite: 1 }, tr: { emotionalResponse: 2 } },
+                        { t: "“这种瞬间，比纯粹中鱼还上头。”", s: { surface: 1, bigBite: 1 }, tr: { emotionalResponse: 2 } },
                         { t: "“逻辑推导，我想知道它为什么现在才愿意碰。”", s: { scientist: 1, precision: 1 }, tr: { narrativeDrive: 1 } },
                         { t: "“灵光一闪，我突然想换个更怪的打法。”", s: { chaos: 2 }, tr: { experimentation: 2 } }
                     ]
+                },
+                                             // ------ CHAPTER 3 题目 (Q11 - Q15) ------
+                {
+                    q: "Q11 (Ch3-Q1) — 你已经接近一小时没口，湖面一片安静。你现在更可能：",
+                    options: [
+                        { t: "坚信思路没问题，继续坚持这个 pattern", s: { precision: 1, rhythm: 1 }, tr: { patternCommitment: 2 } },
+                        { t: "收竿，开船/步行大范围更换完全不同的区域", s: { rhythm: 2 }, tr: { experimentation: 1 } },
+                        { t: "让动作慢下来，重新仔细观察水色、风向等环境微调", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } },
+                        { t: "彻底放弃当前打法，换一个完全不同的技术体系", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "不焦虑，开始赌“大鱼真正的窗口期可能还没来”", s: { bigBite: 2 }, tr: { chaosTolerance: 1 } },
+                        { t: "看着钓组，开始怀疑是不是今天竿线饵的配置不对", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
+                    ]
+                },
+                {
+                    q: "Q12 (Ch3-Q2) — 你再次看到旁边那个钓手中鱼了，明显比你的大，而且是在类似的区域。你第一反应：",
+                    options: [
+                        { t: "“他一定是读懂了什么水下的隐藏信息。”", s: { scientist: 2 }, tr: { environmentalAwareness: 1 } },
+                        { t: "“他的 retrieve 节奏可能跟我的完全不同。”", s: { rhythm: 2 }, tr: { flowDependence: 1 } },
+                        { t: "“我是不是太 stubborn（固执）了，该变通了。”", s: { precision: 1 }, tr: { emotionalVolatility: 1 } },
+                        { t: "“别憋着了，我现在想直接 all-in 换更刺激的东西抛过去。”", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "“这恰恰说明，大鱼的窗口正在打开。”", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
+                        { t: "“我很想去凑近看看他那套装备和用饵的细节。”", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }
+                    ]
+                },
+                {
+                    q: "Q13 (Ch3-Q3) — 长时间没反馈，你开始慢慢失去信心（confidence）。这时候你最容易：",
+                    options: [
+                        { t: "换上自己最信赖的那枚‘信心饵’（Confidence Bait）", s: { precision: 1, rhythm: 1 }, tr: { confidenceDependency: 2 } },
+                        { t: "反正没口，想尝试一下以前从没认真玩过的怪东西", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "停止盲目抛竿，坐下来疯狂分析当下的环境数据", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } },
+                        { t: "换上 giant bait（超级大饵），赌一口改变一切的重击", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } },
+                        { t: "强迫自己继续保持高强度的 heavy/power fishing", s: { heavy: 2 }, tr: { aggression: 1 } },
+                        { t: "换上 topwater（水面系），试图用视觉刺激重新点燃情绪", s: { surface: 2 }, tr: { emotionalVolatility: 1 } }
+                    ]
+                },
+                {
+                    q: "Q14 (Ch3-Q4) — 现在来到正午：太阳最强、风向变乱、鱼情最差。你会：",
+                    options: [
+                        { t: "乐观地相信，熬过这段下午一定会重新开窗口", s: { bigBite: 1, rhythm: 1 }, tr: { chaosTolerance: 2 } },
+                        { t: "保持平常心，继续像解一道数学题一样慢慢解这个湖", s: { scientist: 2 }, tr: { patternCommitment: 1 } },
+                        { t: "接受现实，明白今天本来就是很难啃的一天", s: { precision: 1 }, tr: { emotionalStability: 1 } },
+                        { t: "想彻底掀桌，换一种颠覆性的钓鱼风格", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "划向最危险、最复杂的重度 cover（障碍区）硬碰硬", s: { heavy: 2 }, tr: { aggression: 2 } },
+                        { t: "执着于重现画面，想尽一切办法制造一次水面‘爆口’", s: { surface: 2 }, tr: { emotionalResponse: 2 } }
+                    ]
+                },
+                {
+                    q: "Q15 (Ch3-Q5) — 陷入僵局的这一刻，你脑子里最接近的一句话是：",
+                    options: [
+                        { t: "“环境变了，但鱼到底为什么停了？”", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } },
+                        { t: "“是不是我呈现饵的方式（interaction）还不够细腻对路？”", s: { precision: 2 }, tr: { interactionSensitivity: 2 } },
+                        { t: "“守住，今天总会让我等到一个大窗口的。”", s: { bigBite: 2 }, tr: { narrativeDrive: 1 } },
+                        { t: "“我得定定心，重新把控和建立自己的做钓节奏。”", s: { rhythm: 2 }, tr: { flowDependence: 2 } },
+                        { t: "“太无聊了，要不试点疯狂甚至不合理的东西？”", s: { chaos: 2 }, tr: { experimentation: 2 } },
+                        { t: "“我就不信那些最深的 cover 里面一条不剩。”", s: { heavy: 2 }, tr: { aggression: 2 } }
+                    ]
                 }
 
-            ],
-            ending: `天已经完全亮了。<br><br>风开始慢慢变强，水面的变化越来越少。<br><br>你意识到：<br>今天的鱼，可能没有那么简单。`
+                // ------ CHAPTER 4 题目 (Q16 - Q20) ------
+                { q: "Q16 (Ch4-Q1) — [请在这里替换你的第4章-Q1文案]", options: [{ t: "选项 A", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } }, { t: "选项 B", s: { rhythm: 2 }, tr: { flowDependence: 1 } }] },
+                { q: "Q17 (Ch4-Q2) — [请在这里替换你的第4章-Q2文案]", options: [{ t: "选项 A", s: { precision: 2 }, tr: { interactionSensitivity: 2 } }, { t: "选项 B", s: { chaos: 2 }, tr: { experimentation: 2 } }] },
+                { q: "Q18 (Ch4-Q3) — [请在这里替换你的第4章-Q3文案]", options: [{ t: "选项 A", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } }, { t: "选项 B", s: { heavy: 2 }, tr: { aggression: 2 } }] },
+                { q: "Q19 (Ch4-Q4) — [请在这里替换你的第4章-Q4文案]", options: [{ t: "选项 A", s: { surface: 2 }, tr: { emotionalResponse: 2 } }, { t: "选项 B", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }] },
+                { q: "Q20 (Ch4-Q5) — [请在这里替换你的第4章-Q5文案]", options: [{ t: "选项 A", s: { scientist: 1 }, tr: { logicBias: 1 } }, { t: "选项 B", s: { rhythm: 1 }, tr: { patternCommitment: 2 } }] },
+
+                // ------ CHAPTER 5 题目 (Q21 - Q25) ------
+                { q: "Q21 (Ch5-Q1) — [请在这里替换你的第5章-Q1文案]", options: [{ t: "选项 A", s: { scientist: 2 }, tr: { environmentalAwareness: 2 } }, { t: "选项 B", s: { rhythm: 2 }, tr: { flowDependence: 1 } }] },
+                { q: "Q22 (Ch5-Q2) — [请在这里替换你的第5章-Q2文案]", options: [{ t: "选项 A", s: { precision: 2 }, tr: { interactionSensitivity: 2 } }, { t: "选项 B", s: { chaos: 2 }, tr: { experimentation: 2 } }] },
+                { q: "Q23 (Ch5-Q3) — [请在这里替换你的第5章-Q3文案]", options: [{ t: "选项 A", s: { bigBite: 2 }, tr: { narrativeDrive: 2 } }, { t: "选项 B", s: { heavy: 2 }, tr: { aggression: 2 } }] },
+                { q: "Q24 (Ch5-Q4) — [请在这里替换你的第5章-Q4文案]", options: [{ t: "选项 A", s: { surface: 2 }, tr: { emotionalResponse: 2 } }, { t: "选项 B", s: { tackle: 2 }, tr: { tackleAttachment: 2 } }] },
+                { q: "Q25 (Ch5-Q5) — [请在这里替换你的第5章-Q5文案]", options: [{ t: "选项 A", s: { scientist: 1 }, tr: { logicBias: 1 } }, { t: "选项 B", s: { rhythm: 1 }, tr: { patternCommitment: 2 } }] }
+
+            ]
         };
 
         let currentState = 'cover'; 
         let currentQIndex = 0;
+        let activeChapter = 1;
 
         function render() {
             const app = document.getElementById('app');
@@ -207,26 +278,27 @@
             } else if (currentState === 'chapter_start') {
                 app.innerHTML = `
                     <div class="text-center fade-in">
-                        <h2 class="text-blue-400 tracking-[0.2em] mb-4 uppercase text-sm font-semibold">${config.chapter}</h2>
+                        <h2 class="text-blue-400 tracking-[0.2em] mb-4 uppercase text-sm font-semibold">${config.chapterMeta}</h2>
                         <h1 class="serif text-5xl font-black mb-12 tracking-tight text-white">${config.chapterTitle}</h1>
-                        <button onclick="changeState('narrative')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">开始第一章</button>
+                        <button onclick="changeState('narrative')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">开始阅读</button>
                     </div>`;
             } else if (currentState === 'narrative') {
                 app.innerHTML = `
                     <div class="fade-in flex flex-col items-start">
-                        <p class="serif text-xl leading-relaxed text-slate-200 mb-12">${config.opening}</p>
+                        <p class="serif text-xl leading-relaxed text-slate-200 mb-12">${config.openingText}</p>
                         <button onclick="changeState('quiz')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase self-center">握紧钓竿 →</button>
                     </div>`;
             } else if (currentState === 'quiz') {
                 const q = config.questions[currentQIndex];
+                let localIndex = (currentQIndex % 5) + 1; 
                 app.innerHTML = `
                     <div class="fade-in">
                         <div class="flex justify-between items-end mb-4">
-                            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Phase: Arrival</span>
-                            <span class="text-[10px] text-slate-500 font-mono">${currentQIndex + 1} / ${config.questions.length}</span>
+                            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">${config.chapterMeta}</span>
+                            <span class="text-[10px] text-slate-500 font-mono">${localIndex} / 5</span>
                         </div>
                         <div class="h-1 w-full bg-white/5 mb-12 rounded-full overflow-hidden">
-                            <div class="progress-bar h-full bg-blue-500" style="width: ${(currentQIndex+1)/config.questions.length*100}%"></div>
+                            <div class="progress-bar h-full bg-blue-500" style="width: ${localIndex / 5 * 100}%"></div>
                         </div>
                         <h2 class="serif text-2xl font-bold mb-10 text-white leading-snug">${q.q}</h2>
                         <div class="space-y-4">
@@ -234,46 +306,76 @@
                         </div>
                     </div>`;
             } else if (currentState === 'end') {
-                app.innerHTML = `
-                    <div class="fade-in">
-                        <p class="serif text-xl leading-relaxed text-slate-200 mb-12 italic">${config.ending}</p>
-                        <div class="p-8 border border-white/10 rounded-3xl bg-white/5 backdrop-blur-sm">
-                            <p class="text-xs text-slate-500 uppercase tracking-widest mb-6 border-b border-white/10 pb-4">第一章节数据分析（临时预览）</p>
-                            <div class="grid grid-cols-2 gap-4">
-                                ${Object.entries(scores.archetypes).filter(([_,v])=>v>0).map(([k,v])=>`<div class="text-xs font-mono"><span class="text-slate-500">${k}:</span> <span class="text-blue-400">${v}</span></div>`).join('')}
-                            </div>
-                        </div>
-                        <p class="mt-12 text-slate-500 text-sm animate-pulse text-center italic">休息片刻，等待太阳升起...</p>
-                    </div>`;
-            }
+                // 如果当前完成了第 2 章（也就是答完了第 10 题），由于还没有第 3 章，这里就不显示“迈向下一阶段”的按钮
+                                // 根据当前的章节，决定下一个蓝色按钮带玩家去哪
+                let btnHtml = "";
+                if (activeChapter === 1) {
+                    btnHtml = `<button onclick="enterNextChapter(2, 'Chapter 2 — First Contact', 'Reading The Fish', '[这里填第2章开场叙事文字]')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">进入第二章 →</button>`;
+                } else if (activeChapter === 2) {
+                    btnHtml = `<button onclick="enterNextChapter(3, 'Chapter 3 — Struggle', 'The Slow Hours', '时间来到中午。<br><br>太阳已经升高，风向开始变化。<br><br>刚刚那些 follow、subtle bite 和水面动静都慢慢变少了。<br><br>你已经有一段时间没口，湖开始变安静。<br><br>你开始意识到：真正困难的时间，到了。')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">进入第三章 →</button>`;
+
+                } else if (activeChapter === 3) {
+                    btnHtml = `<button onclick="enterNextChapter(4, 'Chapter 4 — The Turn', 'Adapting', '[这里填第4章开场叙事文字]')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">进入第四章 →</button>`;
+                } else if (activeChapter === 4) {
+                    btnHtml = `<button onclick="enterNextChapter(5, 'Chapter 5 — Last Cast', 'Sunset Decision', '[这里填第5章开场叙事文字]')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">进入第五章 →</button>`;
+                } else if (activeChapter === 5) {
+                    // 第五章做完，证明全盘通关，这里可以触发最终的“查看测试结果”
+                    btnHtml = `<button onclick="alert('恭喜你解锁全盘隐藏数据！最终人格分析报告正在孵化中...')" class="nav-btn px-10 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase">查看最终人格档案 →</button>`;
+                }
+
         }
 
         window.changeState = (s) => { currentState = s; render(); };
+        
+        // 丝滑切入第二章的专属按钮逻辑
+               // 万能换章函数：只要告诉它章号、大标题、小标题和开场白，它就能自动把网页切过去！
+        window.enterNextChapter = (chNum, meta, title, opening) => {
+            activeChapter = chNum;
+            config.chapterMeta = meta;
+            config.chapterTitle = title;
+            config.openingText = opening;
+            
+            // 每次换章，把题目指针调整到该章的第一题
+            currentQIndex = (chNum - 1) * 5; 
+            
+            currentState = 'chapter_start';
+            render();
+        };
 
-                window.handleAnswer = (i) => {
+
+        window.handleAnswer = (i) => {
             const opt = config.questions[currentQIndex].options[i];
             for (let k in opt.s) { scores.archetypes[k] += opt.s[k]; }
             for (let k in opt.tr) { scores.traits[k] += opt.tr[k]; }
             
-            // 💡 核心逻辑：判断是否完成了某一章
-            if (currentQIndex === 4) { 
-                // 第5题做完（索引是4），展示第一章的结束，并准备把章节文案换成第二章
-                config.ending = `太阳已经升高。<br><br>风变得更稳定了。<br><br>但鱼的反馈，却开始慢慢减少。<br><br>你意识到：<br>今天真正的 pattern，可能还没有完全出现。`;
+            // 💡 自动卡点逻辑：当打完每章的第5题（索引为 4, 9, 14, 19, 24）时，强制停下来切入 Ending
+            if (currentQIndex === 4) {
+                // 第一章完结
                 currentState = 'end';
-                currentQIndex++; // 指向第6题
                 render();
             } else if (currentQIndex === 9) {
-                // 第10题做完（索引是9），这就是第二章结束了
-                // 之后有了第三章，可以在这里如法炮制！
-                config.ending = `中午的烈日开始灼烧水面。<br><br>那是做钓最艰难的慢时光...`; 
+                // 第二章完结
                 currentState = 'end';
-                currentQIndex++;
                 render();
-            } else if (currentQIndex < config.questions.length - 1) {
-                currentQIndex++;
+         } else if (currentQIndex === 14) {
+    // 第三章完结
+    config.endingText = `下午的风开始变化。<br><br>云层慢慢移动。<br><br>远处岸边，突然出现了一些新的 bait movement。<br><br>湖好像：重新“活”了一点。<br><br>你知道：今天真正的窗口，可能还没结束。`;
+    currentState = 'end';
+    render();
+}
+else if (currentQIndex === 19) {
+                // 第四章完结
+                config.endingText = `[这里是 Chapter 4 的谢幕叙事占位符]`;
+                currentState = 'end';
+                render();
+            } else if (currentQIndex === 24) {
+                // 第五章完结 -> 这就是最后一章了！
+                config.endingText = `全天做钓结束，收竿回岸。<br><br>你的鲈钓人格档案已成功建立。`;
+                currentState = 'end';
                 render();
             } else {
-                currentState = 'end';
+                // 其他情况，无缝进入下一题
+                currentQIndex++;
                 render();
             }
         };
